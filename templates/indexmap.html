@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Map Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #555;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .company-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .company-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .company-name {
+            font-size: 1.5em;
+            color: #222;
+        }
+        .company-details {
+            margin-top: 5px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Nearby Companies</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload Excel File:</label>
+        <input type="file" name="file" required>
+        <br><br>
+        <label for="city">Enter City:</label>
+        <input type="text" name="city" required>
+        <br><br>
+        <button type="submit" >Submit</button>
+    </form>
+
+    <!-- Display the list of companies if available -->
+    {% if company_list %}
+        <h2>Companies:</h2>
+        <ul class="company-list">
+            {% for company in company_list %}
+                <li class="company-item">
+                    <div class="company-name">{{ company['Company Name'] }}</div> 
+                    <div class="company-details">
+                        {{ company['Address'] }}<br>
+                        Students Employed: {{ company['Student Count'] }}<br>
+                        Phone: {{ company['Phone Number'] }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('show_map') }}">View Map</a>
+    {% endif %}
+</body>
+</html>
